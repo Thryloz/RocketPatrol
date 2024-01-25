@@ -1,9 +1,4 @@
 // Jim Lee
-// Rocket Patrol 2: Eletric Boogaloo
-// 2 hours monday
-// 1. 5 pts new enemy spaceship 
-// 2. 3 pts timer display
-
 
 let config = {
     type: Phaser.AUTO,
