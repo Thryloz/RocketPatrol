@@ -69,9 +69,9 @@ class Play extends Phaser.Scene{
         this.gameOver = false;
         scoreConfig.fixedWidth = 0;
         // (time elapsed before callback, callback (the arrow function), null, callback context)
-        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
+        this.clock = this.time.delayedCall(5000, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5)
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5)
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5)
             this.gameOver = true;
         }, null, this)
     }
@@ -109,10 +109,6 @@ class Play extends Phaser.Scene{
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
         }
-        if (this.checkCollision(this.p1Rocket, this.bonusShip)){
-            this.p1Rocket.reset();
-            this.shipExplode(this.bonusShip);
-        }
 
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)){
             this.scene.start('menuScene');
@@ -137,7 +133,7 @@ class Play extends Phaser.Scene{
             ship.alpha = 1                       // make ship visible again
             boom.destroy()                       // remove explosion sprite
           })
-        this.sound.play('sfx-explosion');
+
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
     }

@@ -6,7 +6,6 @@ class Rocket extends Phaser.GameObjects.Sprite{
         scene.add.existing(this); // adding rocket manually
         this.isFiring = false;  
         this.moveSpeed = 2;
-        this.sfxShot = scene.sound.add('sfx-shot');
     }
 
     update(){
@@ -22,9 +21,8 @@ class Rocket extends Phaser.GameObjects.Sprite{
 
         // just down is for firing once
         // waits for player to release key before regiersting new input
-        if (Phaser.Input.Keyboard.JustDown(keyFIRE) && !this.isFiring){
+        if (Phaser.Input.Keyboard.JustDown(keyFIRE)){
             this.isFiring = true;
-            this.sfxShot.play();
         }
 
         // resets rocket
