@@ -29,7 +29,8 @@ class Play extends Phaser.Scene{
         this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0, 0);
         this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
-    
+        this.bonusShip = new bonusSpaceship(this, game.config.width, borderUISize*6 + borderUISize*5, 'bonusSpaceship', 0, 40).setOrigin(0,0)
+
         //score
         this.p1Score = 0;
 
@@ -47,6 +48,24 @@ class Play extends Phaser.Scene{
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig)
 
+        //timer
+        let timerConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.timeInSeconds = game.settings.gameTimer/1000;
+        this.timerRight = this.add.text(borderUISize*15, borderUISize + borderPadding*2, this.timeInSeconds, timerConfig)
+
+
+
         this.gameOver = false;
         scoreConfig.fixedWidth = 0;
         // (time elapsed before callback, callback (the arrow function), null, callback context)
@@ -62,15 +81,20 @@ class Play extends Phaser.Scene{
             this.scene.restart();
         }
 
-
-
-
         this.starfield.tilePositionX -= 4;
         if(!this.gameOver){
             this.p1Rocket.update();
             this.ship01.update();
             this.ship02.update();
             this.ship03.update();
+            this.bonusShip.update();
+            // timer update
+            this.timeInSeconds -= .006;
+            this.timerRight.text = this.timeInSeconds;
+        }
+
+        if(this.gameOver){
+            this.timerRight.text = 0.000;
         }
 
         if (this.checkCollision(this.p1Rocket, this.ship03)){
@@ -84,6 +108,10 @@ class Play extends Phaser.Scene{
         if (this.checkCollision(this.p1Rocket, this.ship01)){
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
+        }
+        if (this.checkCollision(this.p1Rocket, this.bonusShip)){
+            this.p1Rocket.reset();
+            this.shipExplode(this.bonusShip);
         }
 
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)){
