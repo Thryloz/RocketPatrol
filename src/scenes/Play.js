@@ -109,10 +109,6 @@ class Play extends Phaser.Scene{
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
         }
-
-        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)){
-            this.scene.start('menuScene');
-        }
     }
 
     // collisions management

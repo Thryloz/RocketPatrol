@@ -26,10 +26,6 @@ class Menu extends Phaser.Scene{
     create(){
         this.anims.create({key:'explode', frames: this.anims.generateFrameNumbers('explosion', {start:0, end:9, first:0}), frameRate: 30});
 
-
-        this.add.text(20, 20, "Rocket Patrol Menu")
-        this.scene.start("playScene")
-    }
         let menuConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
@@ -58,7 +54,6 @@ class Menu extends Phaser.Scene{
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)){
             game.settings = {
                 spaceshipSpeed: 3,
-                bonusSpaceshipSpeed: 5,
                 gameTimer: 60000
             }
             this.sound.play('sfx-select');
@@ -68,7 +63,6 @@ class Menu extends Phaser.Scene{
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)){
             game.settings = {
                 spaceshipSpeed: 5,
-                bonusSpaceshipSpeed: 6,
                 gameTimer: 45000
             }
             this.sound.play('sfx-select');
